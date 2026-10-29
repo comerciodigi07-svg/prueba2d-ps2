@@ -1,9 +1,10 @@
+
 name: Build PongPS2 ISO
 
 on:
   workflow_dispatch:
   push:
-    branches: [ "main", "master" ]
+    branches: ["main", "master"]
 
 jobs:
   build:
@@ -11,12 +12,16 @@ jobs:
     container: ps2dev/ps2dev:latest
     steps:
       - uses: actions/checkout@v4
+
+      - name: Install ISO tools
+        run: apk add --no-cache make cdrkit
+
       - name: Compile ELF and ISO
         run: |
-          apk add --no-cache make genisoimage
           make clean
           make
           make iso
+
       - name: Upload artifacts
         uses: actions/upload-artifact@v4
         with:
