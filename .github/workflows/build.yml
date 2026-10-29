@@ -13,8 +13,10 @@ jobs:
     steps:
       - uses: actions/checkout@v4
 
-      - name: Install ISO tools
-        run: apk add --no-cache make cdrkit
+- name: Install tools
+  run: |
+    apk add --no-cache make
+    apk add --no-cache cdrkit || apk add --no-cache xorriso
 
       - name: Compile ELF and ISO
         run: |
